@@ -18,7 +18,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see http://www.gnu.org/licenses/ .
+# along with this program.  If not, see http://www.gnu.org/licenses/.
 
 import xml.etree.ElementTree as et
 import datetime
@@ -172,7 +172,9 @@ def parse_XML():
         Loops through the Tracks <dict> passing the iterator to song_value_dict which
         returns a 3 element tuple. The song_key (int), song_value_dict (dict of attribute
         elements for that song), and a boolean flag that indicates the end of the Tracks
-        <dict> and breaks the loop. Finally returns a two object tupple. First a songs
+        <dict> and breaks the loop.
+
+        Finally this function returns a three object tupple. First a songs
         dictionary with SongID intergers for keys and song attribute dictionaries for
         values. Second a Play List Dictionary with string Names for keys, and set of
         SongIDs for values.
@@ -311,6 +313,20 @@ def collect_keys(songs_dict):
             song_keys.add(k)
 
     return song_keys
+
+def time_zone_string():
+    ''' Address the fact that dates are stored in UTC in the Music Library.xml
+        This code currently does nothing but set a variable to 'America/Los_Angeles'
+        in the future I plan to add a function to select an alternate timezone from the list of available timezone strings from zoneinfo
+    '''
+
+    # You can uncomment/comment the next two lines to change to from Pacific time to UTC or
+    # see https://adamj.eu/tech/2021/05/06/how-to-list-all-timezones-in-python/ to discover a value that will work for your location
+    # return 'UTC'
+    return 'America/Los_Angeles'
+        
+
+
 
 if __name__ == '__main__':
     super_print("Acquiring iTunes data")
