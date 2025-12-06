@@ -1,3 +1,14 @@
+# don't upload your whole library XML, it's big
+*.xml
+
+# emacs auto save etc.
+*~
+~*
+\#*\*
+.\#*
+\#*\#
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

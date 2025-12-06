@@ -1,0 +1,20 @@
+#+TITLE: a_music_xml_extract
+#+AUTHOR: Paul McCombs
+#+EMAIL: paul@lazym8.com
+#+DESCRIPTION: Just having a play at parsing and browsing metadata from the Apple Muisc applicaiton on MacOS.
+
+* Introduction
+
+Just having a play at parsing and browsing metadata from the Apple Muisc applicaiton on MacOS.
+
+To get started open Music on your mac and select File->Library->Export Library, then save the file as /Library.xml/ in the directory of this repository for the code as it exists here will find it. I've added ~Library.xml~ to /.gitignore/ so that it won't be shared with the public.
+
+I'm starting with some Python code I had working several years ago, when Music was still called iTunes.
+
+* Features
+
+No features yet, hopefully  they will come in time.
+
+** Feature A
+** Feature B
+** Feature C
