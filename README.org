@@ -21,7 +21,8 @@ No features yet, hopefully  they will come in time.
 
 * Notes about Library.xml
 ** What is a file?
-   + There is a numeric key
-     ~<key>xxxxx</key>~
-   + There is a dictionary with many composite keys
-     + ~<key>Total Time</key>~ is an integer in milliseconds
+   + For each song:
+     1. A numeric key:
+	~<key>xxxxx</key>~
+     2. A dictionary with many composite keys:
+	+ ~<key>Total Time</key>~:  an integer with milliseconds for units

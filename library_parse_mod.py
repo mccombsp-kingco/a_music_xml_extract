@@ -1,6 +1,9 @@
-# Portion of iTunesMapper. A project to parse the iTunes XML, import google
-# location data, and create a map of where you listened to a subset of songs
+# A portion of a_music_xml_extract
+# Copyright (C) 2025 paul mccombs
+# Adapted from Python 2 to Python 3
 
+# This code orginated from Portion of iTunesMapper (Python 2). A project to parse the iTunes XML, import google
+# location data, and create a map of where you listened to a subset of songs
 # Copyright (C) 2015  paul mccombs
 # contact at https://github.com/mccombsp-kingco/itunesmapper
 
@@ -41,16 +44,16 @@ import datetime
 
 def childprint(child_el):
     '''Takes any ElementTree element object and prints out the tag, attrib and text'''
-    print ''.ljust(50,'-')
-    print child_el.tag
-    print child_el.attrib
-    print child_el.text
-    print ''.ljust(50,'-')
+    print(''.ljust(50,'-'))
+    print(child_el.tag)
+    print(child_el.attrib)
+    print(child_el.text)
+    print(''.ljust(50,'-'))
 
 def super_print(txt_input):
-    print "".ljust(50, '#')
-    print txt_input
-    print "".ljust(50, '#')
+    print("".ljust(50, '#'))
+    print(txt_input)
+    print("".ljust(50, '#'))
 
 def convert_text_to_data(tag_txt, text_txt):
     '''
@@ -88,7 +91,7 @@ def convert_song_el(songs_gen):
     #                     expected.
     try:
         while True:
-            attribute_el = songs_gen.next()
+            attribute_el = next(songs_gen)
             #debug# print attribute_el.tag, attribute_el.text
             if attribute_el.tag == "dict": # this detects the start of the next song.
                 break
@@ -114,14 +117,14 @@ def convert_song_el(songs_gen):
     return (song_key, song_value_dict, False)
 
 def convert_list_el(lists_gen):
-    ''' Uses lists_gen.next() to step through the XML, find each play list,
+    ''' Uses next(songs_gen) to step through the XML, find each play list,
         create a string of the name and a set of the Track ID integers then
         return them. Values of None will be
         returned to indicate the end of the play lists is reached.
     '''
-    prev_el = lists_gen.next()
+    prev_el = next(lists_gen)
     #debug# childprint(prev_el)
-    current_el = lists_gen.next()
+    current_el = next(lists_gen)
     #debug# childprint(current_el)
 
     try:
@@ -129,7 +132,7 @@ def convert_list_el(lists_gen):
                     # tag that hold all the track ids
             if prev_el.tag == 'dict' and current_el.text == 'Name':
                 #debug# super_print("test is true")
-                current_el = lists_gen.next()
+                current_el = next(lists_gen)
                 #debug# childprint(current_el)
                 plist_name = current_el.text
             if prev_el.text == 'Playlist Items' and current_el.tag == 'array':
@@ -138,11 +141,11 @@ def convert_list_el(lists_gen):
                 break
 
             prev_el = current_el
-            current_el = lists_gen.next()
+            current_el = next(lists_gen)
 
         #create the set of Track IDs for playlist
         track_ids = set()
-        plist_prev_el = plist_gen.next()
+        plist_prev_el = next(plist_gen)
         #debug# print "plist_prev_el"
         #debug# childprint(plist_prev_el)
 
@@ -177,14 +180,14 @@ def parse_XML():
 
     # initialize and load the iTunes data from the XML file.
     # using a copy of the file placed in my development directory for safe keeping.
-    lib = et.parse('iTunes Music Library.xml').getroot()
+    lib = et.parse('Library.xml').getroot()
 
     # test that the XML version number is the one we know how to deal with.    
     version_num = lib.attrib["version"]
     if version_num == '1.0':
         super_print("Parsing iTunes XML version %s" % version_num)
     else:
-        super_print("iTunes XML versioin %S, is not supported." % version_num)
+        super_print("iTunes XML version %S, is not supported." % version_num)
 
     #lib[0] is the <dict> tag just under the lib <plist> tag set as the lib root
     #Looking for the <dict> tag that is preceded by the <key> tag with a text of
@@ -208,9 +211,9 @@ def parse_XML():
     #Convert the Tracklist <dict> element (songs variable) into a python structure.
     #Every other child of songs is a <dict> element representing a track
     songs_dict = {}
-    songs_gen.next() # this throws away the root <dict> tag
-    songs_gen.next() # this throws away the <key> tag
-    songs_gen.next() # this brings us to the 1st of the single song <dict> tags
+    next(songs_gen) # this throws away the root <dict> tag
+    next(songs_gen) # this throws away the <key> tag
+    next(songs_gen) # this brings us to the 1st of the single song <dict> tags
 
     # This loops until the end of the Tracks <dict> and passes each song element
     # to convert_song_el
@@ -318,4 +321,4 @@ if __name__ == '__main__':
     #debug# super_print(str(all_lists))
     #debug# super_print(str(all_songs[169498]))
     for pl_name in all_lists.keys():
-        print "Play List: "+pl_name+" - Length: "+str(len(all_lists[pl_name]))
+        print("Play List: "+pl_name+" - Length: "+str(len(all_lists[pl_name])))
