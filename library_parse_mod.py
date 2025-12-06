@@ -24,7 +24,7 @@ import xml.etree.ElementTree as et
 import datetime
 
 ''' If you load this as a module call parse_XML() with no arguments to get back a two
-    element tupple. First a songs dictionary and second a play list dictionary.
+    element tuple. First a songs dictionary and second a play list dictionary.
     
     To do list:
     1. Something things:
@@ -174,7 +174,7 @@ def parse_XML():
         elements for that song), and a boolean flag that indicates the end of the Tracks
         <dict> and breaks the loop.
 
-        Finally this function returns a three object tupple. First a songs
+        Finally this function returns a two object tuple. First a songs
         dictionary with SongID intergers for keys and song attribute dictionaries for
         values. Second a Play List Dictionary with string Names for keys, and set of
         SongIDs for values.
