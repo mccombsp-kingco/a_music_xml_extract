@@ -7,7 +7,7 @@
 
 Just having a play at parsing and browsing metadata from the Apple Muisc applicaiton on MacOS.
 
-To get started open Music on your mac and select File->Library->Export Library, then save the file as /Library.xml/ in the directory of this repository for the code as it exists here will find it. I've added ~Library.xml~ to /.gitignore/ so that it won't be shared with the public.
+To get started open Music on your mac and select File->Library->Export Library, then save the file as /Library.xml/ in the directory of this repository for the code as it exists here will find it. I've added ~*.xml~ to /.gitignore/ so that my large metadata file won't be wasting space in the repository.
 
 I'm starting with some Python code I had working several years ago, when Music was still called iTunes.
 
@@ -18,3 +18,10 @@ No features yet, hopefully  they will come in time.
 ** Feature A
 ** Feature B
 ** Feature C
+
+* Notes about Library.xml
+** What is a file?
+   + There is a numeric key
+     ~<key>xxxxx</key>~
+   + There is a dictionary with many composite keys
+     + ~<key>Total Time</key>~ is an integer in milliseconds
