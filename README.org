@@ -100,8 +100,7 @@ Currently the manually saved /Library.xml/ file is parsed with Element Tree in /
 #+end_src
 ** What are we looking for?
    Each song has:
-     1. A numeric key:
-	+ ~<key>xxxxx</key>~
-     2. A dictionary with many composite keys:
-	+ ~<key>Total Time</key>~:  an integer with milliseconds for units
-	+ ~<key>Play Date UTC</key>~: a datetime object in UTC but not explicitly noted as such. Needs to be processed to show local time.
+   1. A numeric key:  ~<key>xxxxx</key>~
+   2. A dictionary with many composite keys:
+      + ~<key>Total Time</key>~:  an integer with milliseconds for units
+      + ~<key>Play Date UTC</key>~: a datetime object in UTC but not explicitly noted as such. Needs to be processed to show local time.
