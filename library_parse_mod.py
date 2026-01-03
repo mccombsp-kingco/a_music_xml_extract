@@ -1,10 +1,10 @@
 # A portion of a_music_xml_extract
-# Copyright (C) 2025 paul mccombs
+# Copyright (C) 2025, 2026 Paul McCombs
 # Adapted from Python 2 to Python 3
 
 # This code orginated from Portion of iTunesMapper (Python 2). A project to parse the iTunes XML, import google
 # location data, and create a map of where you listened to a subset of songs
-# Copyright (C) 2015  paul mccombs
+# Copyright (C) 2015  Paul McCombs
 # contact at https://github.com/mccombsp-kingco/itunesmapper
 
 # This program is free software: you can redistribute it and/or modify

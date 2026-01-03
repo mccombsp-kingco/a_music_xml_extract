@@ -33,18 +33,77 @@ import zoneinfo
 #    Note: the keys are sparsely populated, you can't count on them existing in every value
 all_keys = pmod.collect_keys(all_songs)
 
-# Ask the user for a string to search for artist name
-name_input = input("Enter an artists name to query: ")
+############# Functions
+# Returns a list of keys that match a query
+def find_keys (search_choice, search_string):
+    search_choices = { '1': "Artist", '2': "Name", '3': "Album"}
+    keys = []
 
-# Look in all_songs for artist strings that include the requested text
-for key in all_songs:
-    if 'Artist' in all_songs[key] and name_input.lower() in all_songs[key]['Artist'].lower():
-        print(all_songs[key]['Artist'] + ": "+all_songs[key]['Name']+"\n")
-        if 'Play Date UTC' not in all_songs[key]:
-            pacdate = "Never"
-        else:
-            playdate = all_songs[key]['Play Date UTC']
-            awaredate = playdate.replace(tzinfo=zoneinfo.ZoneInfo(key='UTC'))
-            pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string()))
-        print("     Last played: "+str(pacdate)+"\n")
-        print("     Key        : "+str(key)+"\n")
+    for key in all_songs:
+        if search_choices[search_choice] in all_songs[key] and search_string.lower() in all_songs[key][search_choices[search_choice]].lower():
+            keys.append(key)
+
+    return keys
+
+# Prints brief song description given a song key
+def brief_print (key):
+    print(str(key) + ") " +  all_songs[key]['Artist'] + ": "+all_songs[key]['Name'])
+    print(all_songs[key]['Album'])
+    if 'Play Date UTC' not in all_songs[key]:
+        pacdate = "Never"
+    else:
+        playdate = all_songs[key]['Play Date UTC']
+        awaredate = playdate.replace(tzinfo=zoneinfo.ZoneInfo(key='UTC'))
+        pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string()))
+    print("     Last played: "+str(pacdate)+"\n")
+    return
+
+# Print long song description given a song key
+def long_print (key):
+    print(all_songs[key])
+    return
+
+# Main Program Loop
+while True:
+
+    # Prompt user for a search type
+    print("""
+    1) Search by Artist
+    2) Search by Song Title
+    3) Search by Album Title
+    4) All details for song key
+    Q) Exit this demo
+    """)
+
+    choice = input("Press the number corresponding to the search you want:").lower()
+
+    match choice:
+        case "1":
+            # Ask the user for a string to search for artist name
+            name_input = input("Enter an artist's name to search: ")
+            songs = find_keys(choice, name_input)
+            for song_key in songs:
+                brief_print(song_key)
+        case "2":
+            # Ask the user for a string to search for song title
+            name_input = input("Enter a song title to search: ")
+            songs = find_keys(choice, name_input)
+            for song_key in songs:
+                brief_print(song_key)
+        case "3":
+            # Ask the user for a string to search for album title
+            name_input = input("Enter an album title to search: ")
+            songs = find_keys(choice, name_input)
+            for song_key in songs:
+                brief_print(song_key)
+        case "4":
+            # Ask for the key to print details
+            song_key = int(input("Enter the key of the song you want details for:"))
+            long_print(song_key)
+        case "q":
+            print("Goodbye")
+            break
+        case _:
+            print("You have made an invalid choice")
+
+            
