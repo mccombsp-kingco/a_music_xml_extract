@@ -19,6 +19,7 @@
 import library_parse_mod as pmod
 import datetime
 import zoneinfo
+import pandas as pd
 
 # Produces two dictionaries
 #    all_songs: the key is a unique integer assigned by Music to the song.
@@ -45,18 +46,21 @@ def find_keys (search_choice, search_string):
 
     return keys
 
-# Prints brief song description given a song key
-def brief_print (key):
-    print(str(key) + ") " +  all_songs[key]['Artist'] + ": "+all_songs[key]['Name'])
-    print(all_songs[key]['Album'])
+# Returns a brief pandas data frame with one row for the provided song key
+def brief_result (key):
+    result = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
+    
+    #print(str(key) + ") " +  all_songs[key]['Artist'] + ": "+all_songs[key]['Name'])
+    #print(all_songs[key]['Album'])
     if 'Play Date UTC' not in all_songs[key]:
         pacdate = "Never"
     else:
         playdate = all_songs[key]['Play Date UTC']
         awaredate = playdate.replace(tzinfo=zoneinfo.ZoneInfo(key='UTC'))
         pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string()))
-    print("     Last played: "+str(pacdate)+"\n")
-    return
+    results.loc[len(results)] = [key, all_songs[key]['Name'], all_songs[key]['Artist'], all_songs[key]['Album'], pacdate]
+    #print("     Last played: "+str(pacdate)+"\n")
+    return result
 
 # Print long song description given a song key
 def long_print (key):
@@ -82,20 +86,32 @@ while True:
             # Ask the user for a string to search for artist name
             name_input = input("Enter an artist's name to search: ")
             songs = find_keys(choice, name_input)
+            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
             for song_key in songs:
-                brief_print(song_key)
+                result = brief_result(song_key)
+                results = pd.concat([results, result], ignore_index=True)
+            with pd.option_context('display.max_rows', None):
+                print(results)
         case "2":
             # Ask the user for a string to search for song title
             name_input = input("Enter a song title to search: ")
             songs = find_keys(choice, name_input)
+            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
             for song_key in songs:
-                brief_print(song_key)
+                result = brief_result(song_key)
+                results = pd.concat([results, result], ignore_index=True)
+            with pd.option_context('display.max_rows', None):
+                print(results)
         case "3":
             # Ask the user for a string to search for album title
             name_input = input("Enter an album title to search: ")
             songs = find_keys(choice, name_input)
+            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
             for song_key in songs:
-                brief_print(song_key)
+                result = brief_result(song_key)
+                results = pd.concat([results, result], ignore_index=True)
+            with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+                print(results)
         case "4":
             # Ask for the key to print details
             song_key = int(input("Enter the key of the song you want details for:"))
