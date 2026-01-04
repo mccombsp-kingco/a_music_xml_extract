@@ -21,7 +21,11 @@ import datetime
 import zoneinfo
 import pandas as pd
 
-# Produces two dictionaries
+# Ignores a specific pandas future warning that warns me of something that I don't believe will be a problem.
+import warnings
+warnings.filterwarnings("ignore", message=".*no longer exclude empty or all-NA columns when determining the result dtypes.*", category=FutureWarning)
+
+# Produce two dictionaries
 #    all_songs: the key is a unique integer assigned by Music to the song.
 #               the value is a dictionary with descriptive keys and corresponding values, the value type vary depending on the key.
 #               Note: see all_keys below
@@ -47,20 +51,30 @@ def find_keys (search_choice, search_string):
     return keys
 
 # Returns a brief pandas data frame with one row for the provided song key
-def brief_result (key):
+def brief_result (row_idx, key):
     result = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
     
-    #print(str(key) + ") " +  all_songs[key]['Artist'] + ": "+all_songs[key]['Name'])
-    #print(all_songs[key]['Album'])
     if 'Play Date UTC' not in all_songs[key]:
         pacdate = "Never"
     else:
         playdate = all_songs[key]['Play Date UTC']
         awaredate = playdate.replace(tzinfo=zoneinfo.ZoneInfo(key='UTC'))
-        pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string()))
-    results.loc[len(results)] = [key, all_songs[key]['Name'], all_songs[key]['Artist'], all_songs[key]['Album'], pacdate]
-    #print("     Last played: "+str(pacdate)+"\n")
+        pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string())).strftime("%Y-%m-%d %H:%M")
+    result.loc[row_idx] = [key, all_songs[key]['Name'], all_songs[key]['Artist'], all_songs[key]['Album'], pacdate]
+    #print(result)
     return result
+
+# Concatenate several unique results into one data frame
+def concat_results (songs):
+    results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
+    for song_key in songs:
+        result = brief_result(len(results), song_key)
+        if len(results):
+            results = pd.concat([results, result], ignore_index=True)
+        else:
+            results = result
+    return results
+
 
 # Print long song description given a song key
 def long_print (key):
@@ -86,31 +100,22 @@ while True:
             # Ask the user for a string to search for artist name
             name_input = input("Enter an artist's name to search: ")
             songs = find_keys(choice, name_input)
-            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
-            for song_key in songs:
-                result = brief_result(song_key)
-                results = pd.concat([results, result], ignore_index=True)
+            results = concat_results(songs)
             with pd.option_context('display.max_rows', None):
                 print(results)
         case "2":
             # Ask the user for a string to search for song title
             name_input = input("Enter a song title to search: ")
             songs = find_keys(choice, name_input)
-            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
-            for song_key in songs:
-                result = brief_result(song_key)
-                results = pd.concat([results, result], ignore_index=True)
+            results = concat_results(songs)
             with pd.option_context('display.max_rows', None):
                 print(results)
         case "3":
             # Ask the user for a string to search for album title
             name_input = input("Enter an album title to search: ")
             songs = find_keys(choice, name_input)
-            results = pd.DataFrame(columns=['SongKey', 'Title', 'Artist', 'Album',"LastPlay"])
-            for song_key in songs:
-                result = brief_result(song_key)
-                results = pd.concat([results, result], ignore_index=True)
-            with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+            results = concat_results(songs)
+            with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', None):
                 print(results)
         case "4":
             # Ask for the key to print details
