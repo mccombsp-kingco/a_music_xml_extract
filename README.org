@@ -29,9 +29,17 @@ Currently the manually saved /Library.xml/ file is parsed with Element Tree in /
    dictionary with SongID integers for keys and song attribute dictionaries for
    values. Second a Play List Dictionary with string Names for keys, and set of
    SongIDs for values.
-** Demo.py
-   Imports library_parse_mod, prompts for a text string and displays a brief summary of each track with an Artist value containing that string. The match is case insensitive.
+** Demo
+   Increasingly misnamed, As of early January 2026, demo.py imports library_parse_mod.py, then presents the user with a menu of choices. The menu allows for a case insensitive search on Artist, Song Title, and Album title that returns an unsorted brief table of song attributes, a raw dump of an entire song record from the appropriate XML tag, and allows the user to quit the application. The brief table includes: song key, song title, artist name, album name, and  date and time last played. The last is currently hard coded to return US Pacific time.
 
+
+* Dependencies
+** [[https://pandas.pydata.org/][Pandas Data Library for Python]]
+   + Using Pandas to display search results with a reasonably tidy presentation. Currently it is set to wrap lines rather than elide data from the table to make it fit.
+   + Currently I'm suppressing a FUTUREWARNING regarding the concat function and how it treats empty data frames. I don't think it will be a problem when the behavior changes in a future version.
+
+** Match-Case syntax
+   Introduced in Python 3.10 in 2021. Not terribly new, but there are plenty of dinosaurs out there, and this documentation is mostly just for future me.
 * Notes about Library.xml
 ** What is the XML structure?
 #+begin_src xml
