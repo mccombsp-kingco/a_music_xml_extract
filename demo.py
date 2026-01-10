@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A portion of a_music_xml_extract
 # Copyright (C) 2025 paul mccombs
 # Adapted from Python 2 to Python 3
@@ -81,10 +82,8 @@ def long_print (key):
     print(all_songs[key])
     return
 
-# Main Program Loop
-while True:
-
-    # Prompt user for a search type
+# Prompt user for a search type
+def asker():
     print("""
     1) Search by Artist
     2) Search by Song Title
@@ -103,6 +102,7 @@ while True:
             results = concat_results(songs)
             with pd.option_context('display.max_rows', None):
                 print(results)
+            return True
         case "2":
             # Ask the user for a string to search for song title
             name_input = input("Enter a song title to search: ")
@@ -110,6 +110,7 @@ while True:
             results = concat_results(songs)
             with pd.option_context('display.max_rows', None):
                 print(results)
+            return True
         case "3":
             # Ask the user for a string to search for album title
             name_input = input("Enter an album title to search: ")
@@ -117,14 +118,21 @@ while True:
             results = concat_results(songs)
             with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', None):
                 print(results)
+            return True
         case "4":
             # Ask for the key to print details
             song_key = int(input("Enter the key of the song you want details for:"))
             long_print(song_key)
+            return True
         case "q":
             print("Goodbye")
-            break
+            return False
         case _:
             print("You have made an invalid choice")
+            return True
 
-            
+# Main Program Loop
+if __name__ == "__main__":
+    domor = True
+    while domor:
+        domor = asker()
