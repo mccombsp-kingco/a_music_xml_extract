@@ -1,0 +1,62 @@
+BODY
+{ 
+ background-image: url(brand.png);
+ background-attachment: fixed;
+ background-repeat: no-repeat;
+ background-position: center;
+ background-color: black;
+}
+
+A:link
+{
+ color: #292A67;
+}
+
+A:visted
+{
+ color: #E0CAEC;
+}
+
+P, OL, UL, TD
+{
+ color:#202D60;	
+}
+
+H1, H2, H3, H4
+{
+ color:#202D60;
+ text-align:center;
+}
+
+div.item {
+	border-radius: 10px;
+	background-color: white;
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 2px solid #202D60;
+	width: 45%;
+	min-width: 14em;
+	margin: 0px 0px 8px 2%;
+	padding: 4px 4px;
+	float: left;
+}
+
+img {
+	border-radius: 10px;
+}
+
+div.banner {
+	border-radius: 10px;
+	background-color: white;
+	background-color: rgba(255, 255, 255, 0.9);
+	border: 2px solid #202D60;
+	width: 92%;
+	padding: 6px 8px;
+	margin: 0px 0px 8px 2%;
+	float: left;
+}
+
+br {
+  display: block; /* Allows the br tag to accept margin/height properties */
+  content: "";    /* Clears the default height */
+  margin: 0;      /* Sets the space to zero */
+}

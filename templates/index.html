@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+  <TITLE>This is only a test...</TITLE>
+  <link rel="stylesheet" href="{{ url_for('static', filename='flask.css') }}">
+</HEAD>
+<BODY>
+  <div class="banner">
+    <H1>This is only a test...</H1>
+  </div>
+  <div class="item">
+    <h2>Menu</h2>
+    <p style="white-space: pre-wrap;">{{ menu_text }}</p>
+  </div>
+  <div class="item">
+    <h2> Output</h2>
+    <p style="white-space: pre-wrap;">{{ output_text }}</p>
+  </div>
+  <div class="banner">
+    v 0.1
+    Updated: <em>2026/01/11</em>
+  </div>
+</BODY>
+
+</HTML>
