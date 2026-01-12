@@ -80,6 +80,7 @@ def concat_results (songs):
 
 # Print long song description given a song key
 def long_print (key):
+    #BUG# Need to add and error handler for KeyError incase the input is not a valid key
     return pprint.pformat(all_songs[key])
 
 menu_text = """
@@ -126,10 +127,11 @@ def asker():
 if __name__ == "__main__":
     domor = "new"
     while domor:
-        if not domor:
-            print("Goodbye!")
-        elif domor != "new":
+        if domor != "new":
             domor = asker()
+            if not domor:
+                print("Goodbye!")
+                break
             print(domor)
         else:
             domor = "not new"
