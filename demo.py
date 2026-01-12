@@ -21,6 +21,7 @@ import library_parse_mod as pmod
 import datetime
 import zoneinfo
 import pandas as pd
+import pprint
 
 # Ignores a specific pandas future warning that warns me of something that I don't believe will be a problem.
 import warnings
@@ -74,24 +75,23 @@ def concat_results (songs):
             results = pd.concat([results, result], ignore_index=True)
         else:
             results = result
-    return results
+    return results.to_string()
 
 
 # Print long song description given a song key
 def long_print (key):
-    print(all_songs[key])
-    return
+    return pprint.pformat(all_songs[key])
 
-# Prompt user for a search type
-def asker():
-    print("""
+menu_text = """
     1) Search by Artist
     2) Search by Song Title
     3) Search by Album Title
     4) All details for song key
     Q) Exit this demo
-    """)
+    """
 
+# Prompt user for a search type
+def asker():
     choice = input("Press the number corresponding to the search you want:").lower()
 
     match choice:
@@ -100,39 +100,38 @@ def asker():
             name_input = input("Enter an artist's name to search: ")
             songs = find_keys(choice, name_input)
             results = concat_results(songs)
-            with pd.option_context('display.max_rows', None):
-                print(results)
-            return True
+            return results
         case "2":
             # Ask the user for a string to search for song title
             name_input = input("Enter a song title to search: ")
             songs = find_keys(choice, name_input)
             results = concat_results(songs)
-            with pd.option_context('display.max_rows', None):
-                print(results)
-            return True
+            return results
         case "3":
             # Ask the user for a string to search for album title
             name_input = input("Enter an album title to search: ")
             songs = find_keys(choice, name_input)
             results = concat_results(songs)
-            with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', None):
-                print(results)
-            return True
+            return results
         case "4":
             # Ask for the key to print details
             song_key = int(input("Enter the key of the song you want details for:"))
-            long_print(song_key)
-            return True
+            return long_print(song_key)
         case "q":
-            print("Goodbye")
             return False
         case _:
-            print("You have made an invalid choice")
-            return True
+            return "You have made an invalid choice"
 
 # Main Program Loop
 if __name__ == "__main__":
-    domor = True
+    domor = "new"
     while domor:
-        domor = asker()
+        if not domor:
+            print("Goodbye!")
+        elif domor != "new":
+            domor = asker()
+            print(domor)
+        else:
+            domor = "not new"
+
+        print(menu_text)
