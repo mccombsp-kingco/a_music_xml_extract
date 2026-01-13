@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import demo
 
 app = Flask(__name__)
 
@@ -10,9 +11,7 @@ menu = """
     Q) Exit this demo
     """
 
-test = """
-    Select a menu item to get some output.
-    """
+test = demo.concat_results(demo.find_keys("1","Giants"))
 
 @app.route("/")
 def index():
