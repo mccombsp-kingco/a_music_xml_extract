@@ -32,14 +32,19 @@ Currently the manually saved /Library.xml/ file is parsed with Element Tree in /
 ** Demo
    Increasingly misnamed, As of early January 2026, demo.py imports library_parse_mod.py, then presents the user with a menu of choices. The menu allows for a case insensitive search on Artist, Song Title, and Album title that returns an unsorted brief table of song attributes, a raw dump of an entire song record from the appropriate XML tag, and allows the user to quit the application. The brief table includes: song key, song title, artist name, album name, and  date and time last played. The last is currently hard coded to return US Pacific time.
 ** Flask Toy
-   flask_toy.py implements the Flask web application framework to run on my local machine and provide a web interface. To start with there is no user interaction. It imports demo.py queries for songs with "Giants" in the artist key, sets a non-functional menu, and displays the query results in a non-wrapping HTML ~<pre>~ tag.
+   flask_toy.py implements the Flask web application framework to run on my local machine and provide a web interface.
 
-   To get my non-interactive page I need to create the following:
+   So far, I have created the following:
    1. flask_toy.py
-   2. ./templates/index.html
-   3. ./static/flask.css
+   2. ./static/flask.css
+   3. ./templates/index.html
+   4. ./templates/results.html
 
    Start the webserver with default settings by running flask_toy from the commandline in its directory ~python3 flask_toy.py~
+
+   Next Steps:
+   1. Rewrite the pages with a base.html for the common elements
+   2. Add a separate form to return all details for a specific song key.
 * Dependencies
 ** [[https://pandas.pydata.org/][Pandas Data Library for Python]]
    + Using Pandas to display search results with a reasonably tidy presentation. Currently it is set to wrap lines rather than elide data from the table to make it fit.
