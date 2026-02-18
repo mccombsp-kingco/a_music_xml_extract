@@ -34,17 +34,14 @@ Currently the manually saved /Library.xml/ file is parsed with Element Tree in /
 ** Flask Toy
    flask_toy.py implements the Flask web application framework to run on my local machine and provide a web interface.
 
-   So far, I have created the following:
-   1. flask_toy.py
-   2. ./static/flask.css
-   3. ./templates/index.html
-   4. ./templates/results.html
+   There are two forms each using a separate query from demo.py to generate the results on their corresponding pages.
+
+   I have implemented a base.html template that has the title, footer, and both forms. There are three derivative pages:
+   1. ./templates/index.html
+   2. ./templates/results.html
+   3. ./templates/details.html
 
    Start the webserver with default settings by running flask_toy from the commandline in its directory ~python3 flask_toy.py~
-
-   Next Steps:
-   1. Rewrite the pages with a base.html for the common elements
-   2. Add a separate form to return all details for a specific song key.
 * Dependencies
 ** [[https://pandas.pydata.org/][Pandas Data Library for Python]]
    + Using Pandas to display search results with a reasonably tidy presentation. Currently it is set to wrap lines rather than elide data from the table to make it fit.

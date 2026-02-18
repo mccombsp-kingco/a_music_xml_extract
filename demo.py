@@ -62,7 +62,17 @@ def brief_result (row_idx, key):
         playdate = all_songs[key]['Play Date UTC']
         awaredate = playdate.replace(tzinfo=zoneinfo.ZoneInfo(key='UTC'))
         pacdate = awaredate.astimezone(zoneinfo.ZoneInfo(pmod.time_zone_string())).strftime("%Y-%m-%d %H:%M")
-    result.loc[row_idx] = [key, all_songs[key]['Name'], all_songs[key]['Artist'], all_songs[key]['Album'], pacdate]
+    # This tests for the presence of keys for the remaining attributes to be returned
+    if 'Name' not in all_songs[key]:
+        fixedname = '<no value>'
+    else: fixedname = all_songs[key]['Name']
+    if 'Artist' not in all_songs[key]:
+        fixedartist = '<no value>'
+    else: fixedartist = all_songs[key]['Artist']
+    if 'Album' not in all_songs[key]:
+        fixedalbum = '<no value>'
+    else: fixedalbum = all_songs[key]['Album']
+    result.loc[row_idx] = [key, fixedname, fixedartist, fixedalbum, pacdate]
     #print(result)
     return result
 

@@ -3,23 +3,19 @@ import demo
 
 app = Flask(__name__)
 
-menu = """
-    1) Search by Artist
-    2) Search by Song Title
-    3) Search by Album Title
-    4) All details for song key
-    """
-
-test = demo.concat_results(demo.find_keys("1","Giants"))
-
 @app.route("/")
 def index():
-    return render_template('index.html', menu_text=menu, output_text=test)
+    return render_template('index.html')
+
+@app.route("/details", methods=['POST'])
+def details():
+    songdetails = demo.long_print(int(request.form['songid']))
+    return render_template('results.html', output_text=songdetails)
 
 @app.route("/results", methods=['POST'])
 def results():
-    test = demo.concat_results(demo.find_keys(request.form['option'],request.form['searchfor']))
-    return render_template('results.html', menu_text=menu, output_text=test)
+    queryresult = demo.concat_results(demo.find_keys(request.form['option'],request.form['searchfor']))
+    return render_template('results.html', output_text=queryresult)
 
 if __name__ == "__main__":
     app.run(debug=True)

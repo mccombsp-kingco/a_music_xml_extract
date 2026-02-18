@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+  <TITLE>Glittering Caves Music Data</TITLE>
+  <link rel="stylesheet" href="{{ url_for('static', filename='flask.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"
+</HEAD>
+<BODY>
+  <div class="banner">
+    <H1>Glittering Caves</H1>
+  </div>
+  {% block forms %}
+  <div class="item">
+    <h2>Search for Tracks</h2>
+    <form action='/results' method='post'>
+      <input type="radio" id="artist" name="option" value="1" required>
+      <label for="artist">Artist Name</label>
+      <input type="radio" id="song" name="option" value="2" required>
+      <label for="song">Song Title</label>
+      <input type="radio" id="album" name="option" value="3" required>
+      <label for="album">Album Title</label>
+      <br>
+      <label>Search String:</label>
+      <input name="searchfor" type="text" required>
+      <br>
+      <input type="submit">
+    </form>
+  </div>
+  <div class="item">
+    <h2>Get Full Song Details</h2>
+    <form action='/details' method='post'>
+      <p>Enter SongKey as shown in query results:</p>
+      <input name="songid" type="text" required>
+      <br>
+      <input type="submit">
+    </form>
+  </div>
+  {% endblock %}
+  {% block main %}{% endblock %}
+  {% block footer %}
+  <div class="banner">
+    <a href="/">Return to Landing Page</a> <br>
+    v 0.3 
+    Updated: <em>2026/02/18</em>
+  </div>
+  {% endblock %}
+</BODY>
+
+</HTML>
+
